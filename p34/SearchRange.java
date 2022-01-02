@@ -1,0 +1,112 @@
+package leetcode.p34;
+
+import java.util.Arrays;
+
+public class SearchRange {
+    public static int[] searchRange(int[] nums, int target) {
+        if (nums.length == 0) {
+            return new int[]{-1, -1};
+        }
+        return helper(nums, 0, nums.length, target);
+    }
+
+    public static int[] helper(int[] nums, int start, int end, int target) {
+        boolean flag = false;
+        int[] result = new int[2];
+        result[0] = -1;
+        result[1] = -1;
+        if (end - start <= 3) {
+            for (int i = start; i < end; i++) {
+                if (nums[i] == target) {
+                    if (flag) {
+                        result[1] = i;
+                    } else {
+                        result[0] = i;
+                        result[1] = i;
+                        flag = true;
+                    }
+                } else if (nums[i] > target) {
+                    return result;
+                }
+            }
+            return result;
+        }
+        int index = (end + start) / 2;
+        if (nums[index] > target) {
+            return helper(nums, start, index, target);
+        } else if (nums[index] < target) {
+            return helper(nums, index + 1, end, target);
+        } else {
+            if (nums[index + 1] != target) {
+                result[1] = index;
+            } else {
+                result[1] = findRightEnd(nums, index + 1, end, target);
+            }
+            if (nums[index - 1] != target) {
+                result[0] = index;
+            } else {
+                result[0] = findLeftEnd(nums, start, index, target);
+            }
+        }
+        return result;
+    }
+
+    public static int findRightEnd(int[] nums, int start, int end, int target) {
+        if (start - end <= 4) {
+            for (int i = start + 1; i < end; i++) {
+                if (nums[i] != target) {
+                    return i - 1;
+                }
+            }
+            return end - 1;
+        }
+        int index = (end + start) / 2;
+        if (nums[index] != target) {
+            if (nums[index - 1] == target) {
+                return index - 1;
+            } else {
+                return findRightEnd(nums, start, index - 1, target);
+            }
+        } else {
+            if (nums[index + 1] != target) {
+                return index;
+            } else {
+                return findRightEnd(nums, index + 1, end, target);
+            }
+        }
+    }
+
+    public static int findLeftEnd(int[] nums, int start, int end, int target) {
+        if (start - end <= 4) {
+            for (int i = end - 2; i >= start; i--) {
+                if (nums[i] != target) {
+                    return i + 1;
+                }
+            }
+            return start;
+        }
+        int index = (end + start) / 2;
+        if (nums[index] != target) {
+            if (nums[index + 1] == target) {
+                return index + 1;
+            } else {
+                return findLeftEnd(nums, index + 2, end, target);
+            }
+        } else {
+            if (nums[index - 1] != target) {
+                return index;
+            } else {
+                return findLeftEnd(nums, start, index, target);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Arrays.equals(searchRange(new int[]{1}, 1), new int[]{0, 0}));
+        System.out.println(Arrays.equals(searchRange(new int[]{1, 2, 3, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 10, 11, 12, 13, 15}, 8), new int[]{3, 11}));
+        System.out.println(Arrays.equals(searchRange(new int[]{8, 8, 8, 8, 8, 8}, 8), new int[]{0, 5}));
+        System.out.println(Arrays.equals(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8), new int[]{3, 4}));
+        System.out.println(Arrays.equals(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 6), new int[]{-1, -1}));
+        System.out.println(Arrays.equals(searchRange(new int[]{}, 0), new int[]{-1, -1}));
+    }
+}
