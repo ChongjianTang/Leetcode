@@ -6,10 +6,10 @@ import java.util.Set;
 
 public class UniqueOccurrences {
     /**
-     * Brute Force
      * Mar 11, 2023 16:31
-     * Time complexity: O(n)
-     * Space complexity: O(n)
+     * Brute Force
+     * Time Complexity: O(n)
+     * Space Complexity: O(n)
      */
     public boolean uniqueOccurrences(int[] arr) {
         HashMap<Integer, Integer> map = new HashMap<>();

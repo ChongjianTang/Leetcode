@@ -22,6 +22,10 @@ public class IsPowerOfTwo {
         return (x & (-x)) == x;
     }
 
+    // TODO: Check the solution. This is a very interesting question about bit operations.
+
+
+
     public static void main(String[] args) {
         System.out.println(isPowerOfTwo(-2147483646));
         System.out.println(Integer.toBinaryString(-2147483646));

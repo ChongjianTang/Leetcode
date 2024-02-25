@@ -1,4 +1,4 @@
-package leetcode.p2055;
+package leetcode.p20.p2055;
 
 import java.util.Arrays;
 

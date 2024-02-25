@@ -10,8 +10,8 @@ public class FindMaximumXOR {
      * 08/31/2022 19:46
      * Brute force
      * TLE - 41/42
-     * Time complexity: O(n^2)
-     * Space complexity: O(1)
+     * Time Complexity: O(n^2)
+     * Space Complexity: O(1)
      */
     public int findMaximumXOR1(int[] nums) {
         int max = Integer.MIN_VALUE;

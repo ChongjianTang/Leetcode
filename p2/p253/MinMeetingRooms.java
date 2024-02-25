@@ -7,6 +7,7 @@ import java.util.Queue;
 
 public class MinMeetingRooms {
     /**
+     * Mar 03, 2022 04:14
      * My approach
      */
     public static int minMeetingRooms1(int[][] intervals) {
@@ -39,7 +40,7 @@ public class MinMeetingRooms {
      * Time complexity: O(nlogn)
      * Space complexity: O(n)
      */
-    public static int minMeetingRooms(int[][] intervals) {
+    public static int minMeetingRooms2(int[][] intervals) {
         Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
         PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
         int result = 0;
@@ -52,6 +53,29 @@ public class MinMeetingRooms {
         }
         return result;
     }
+
+    /**
+     * Feb 18, 2024 19:36
+     * Arrays.sort() + PriorityQueue
+     * Time Complexity: O(nlogn)
+     * Space Complexity: O(n)
+     */
+    public static int minMeetingRooms(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
+        int result = 1;
+        for (int i = 0; i < intervals.length; i++) {
+            while (!pq.isEmpty() && pq.peek()[1] <= intervals[i][0]) {
+                pq.poll();
+            }
+            pq.offer(intervals[i]);
+            result = Math.max(result, pq.size());
+        }
+        return result;
+    }
+
+    // TODO: Check Approach 2: Chronological Ordering in Editorial
+
 
     public static void main(String[] args) {
         int[][] intervals;

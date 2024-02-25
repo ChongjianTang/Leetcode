@@ -110,7 +110,7 @@ public class FirstMissingPositive {
      * Time complexity: O(n)
      * Space complexity: O(1)
      */
-    public static int firstMissingPositive(int[] nums) {
+    public static int firstMissingPositive5(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] < 0 || nums[i] > nums.length) {
                 nums[i] = 0;
@@ -132,6 +132,32 @@ public class FirstMissingPositive {
         }
         return nums.length + 1;
     }
+
+    /**
+     * Feb 19, 2024 23:23
+     * My approach, two pass
+     * Index as a hash key
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     */
+    public static int firstMissingPositive(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            int index = i;
+            while (nums[index] <= nums.length && nums[index] > 0 && nums[index] != index + 1 && nums[nums[index] - 1] != nums[index]) {
+                int temp = nums[index];
+                nums[index] = nums[temp - 1];
+                nums[temp - 1] = temp;
+            }
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
+        }
+        return nums.length + 1;
+    }
+
 
     public static void main(String[] args) {
         System.out.println(firstMissingPositive(new int[]{3, 4, 0, 2}) == 1);

@@ -1,4 +1,4 @@
-package leetcode.p1507;
+package leetcode.p15.p1507;
 
 public class ReformatDate {
     public static String reformatDate(String date) {

@@ -6,8 +6,8 @@ public class Jump {
     /**
      * Jan 18, 2023 18:02
      * DP
-     * Time complexity: O(n^2)
-     * Space complexity: O(n)
+     * Time Complexity: O(n^2)
+     * Space Complexity: O(n)
      */
     public static int jump1(int[] nums) {
         int[] dp = new int[nums.length];
@@ -49,7 +49,7 @@ public class Jump {
      * Official solution
      * Greedy
      */
-    public static int jump(int[] nums) {
+    public static int jump3(int[] nums) {
         // The starting range of the first jump is [0, 0]
         int answer = 0, n = nums.length;
         int curEnd = 0, curFar = 0;
@@ -68,9 +68,39 @@ public class Jump {
         return answer;
     }
 
+    /**
+     * Feb 10, 2024 17:44
+     * Greedy algorithm
+     * Time complexity: O(n)
+     * Space complexity: O(1)
+     */
+    public static int jump(int[] nums) {
+        int jumpRange = nums[0];
+        int jumpCount = 0;
+        int position = 0;
+        if (nums.length == 1) {
+            return 0;
+        }
+        while (jumpRange > 0) {
+            if (jumpRange >= nums.length - 1) {
+                return jumpCount + 1;
+            }
+            int newJumpRange = jumpRange;
+            for (int i = position + 1; i <= jumpRange; i++) {
+                newJumpRange = Math.max(newJumpRange, i + nums[i]);
+            }
+            jumpCount++;
+            jumpRange = newJumpRange;
+        }
+        return -1;
+    }
+
 
     public static void main(String[] args) {
         int[] nums;
+        nums = new int[]{0};
+        System.out.println(jump(nums) == 0);
+
         nums = new int[]{2, 3, 1, 1, 4};
         System.out.println(jump(nums) == 2);
 
