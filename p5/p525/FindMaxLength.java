@@ -5,9 +5,10 @@ import java.util.Map;
 
 public class FindMaxLength {
     /**
+     * Mar 15, 2024 19:36
      * HashMap
-     * Time complexity: O(n)
-     * Space complexity: O(n)
+     * Time Complexity: O(n)
+     * Space Complexity: O(n)
      */
     public int findMaxLength(int[] nums) {
         Map<Integer, Integer> map = new HashMap<>();

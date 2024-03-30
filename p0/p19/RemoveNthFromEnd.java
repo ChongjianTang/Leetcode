@@ -81,7 +81,7 @@ public class RemoveNthFromEnd {
     /**
      * Two pass algorithm
      */
-    public static ListNode removeNthFromEnd(ListNode head, int n) {
+    public static ListNode removeNthFromEnd2(ListNode head, int n) {
         int length = 0;
         ListNode curr = head;
         ListNode dummy = new ListNode();
@@ -96,6 +96,29 @@ public class RemoveNthFromEnd {
             curr = curr.next;
         }
         curr.next = curr.next.next;
+        return dummy.next;
+    }
+
+    /**
+     * Mar 02, 2024 23:44
+     * One pass
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     */
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode right = head;
+        ListNode left = dummy;
+        while (n > 0) {
+            right = right.next;
+            n--;
+        }
+        while (right != null) {
+            right = right.next;
+            left = left.next;
+        }
+        left.next = left.next.next;
         return dummy.next;
     }
 

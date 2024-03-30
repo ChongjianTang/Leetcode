@@ -140,12 +140,35 @@ public class FirstMissingPositive {
      * Time Complexity: O(n)
      * Space Complexity: O(1)
      */
-    public static int firstMissingPositive(int[] nums) {
+    public static int firstMissingPositive6(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             int index = i;
             while (nums[index] <= nums.length && nums[index] > 0 && nums[index] != index + 1 && nums[nums[index] - 1] != nums[index]) {
                 int temp = nums[index];
                 nums[index] = nums[temp - 1];
+                nums[temp - 1] = temp;
+            }
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
+        }
+        return nums.length + 1;
+    }
+
+    /**
+     * Mar 25, 2024 21:18
+     * Index as a hash key
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     */
+    public static int firstMissingPositive(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            while (nums[i] - 1 >= 0 && nums[i] - 1 < nums.length && nums[nums[i] - 1] != nums[i]) {
+                int temp = nums[i];
+                nums[i] = nums[temp - 1];
                 nums[temp - 1] = temp;
             }
         }

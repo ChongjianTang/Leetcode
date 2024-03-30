@@ -73,7 +73,7 @@ public class HasCycle {
      * Time complexity: O(n) (Worst: O(n+k))
      * Space complexity: O(1)
      */
-    public static boolean hasCycle(ListNode head) {
+    public static boolean hasCycle3(ListNode head) {
         if (head == null) {
             return false;
         }
@@ -87,6 +87,38 @@ public class HasCycle {
             }
         }
         return false;
+    }
+
+    /**
+     * Mar 05, 2024 17:15
+     * Floyd's Cycle Finding Algorithm
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     */
+    public static boolean hasCycle(ListNode head) {
+        if (head ==null){
+            return false;
+        }
+        ListNode slow, fast;
+        if (head.next != null) {
+            slow = head.next;
+        } else {
+            return false;
+        }
+        if (slow.next != null) {
+            fast = slow.next;
+        } else {
+            return false;
+        }
+        while (slow != fast) {
+            slow = slow.next;
+            if (fast.next != null && fast.next.next != null) {
+                fast = fast.next.next;
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
 

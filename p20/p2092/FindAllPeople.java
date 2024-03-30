@@ -9,7 +9,6 @@ public class FindAllPeople {
      * Time Complexity: ?
      * Space Complexity: ?
      */
-
     public List<Integer> findAllPeople(int n, int[][] meetings, int firstPerson) {
         class UnionFind {
             int[] parent;
@@ -91,6 +90,9 @@ public class FindAllPeople {
         }
         return new ArrayList<>(peopleWithSecrets);
     }
+
+
+    // TODO: Check the solution
 
     public static void main(String[] args) {
         FindAllPeople f = new FindAllPeople();

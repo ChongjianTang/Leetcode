@@ -20,6 +20,12 @@ class TreeNode {
 }
 
 public class IsSameTree {
+    /**
+     * Feb 25, 2024 18:48
+     * Recursion
+     * Time Complexity: O(node.size)
+     * Space Complexity: O(node.size)
+     */
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null && q == null) {
             return true;

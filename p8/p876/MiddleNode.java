@@ -18,7 +18,7 @@ class ListNode {
 }
 
 public class MiddleNode {
-    public ListNode middleNode(ListNode head) {
+    public ListNode middleNode1(ListNode head) {
         ListNode fast = head;
         ListNode slow = head;
         while (fast != null && fast.next != null) {
@@ -26,5 +26,25 @@ public class MiddleNode {
             slow = slow.next;
         }
         return slow;
+    }
+
+    /**
+     * Mar 06, 2024 20:37
+     * Slow Fast Pointer
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     */
+    public ListNode middleNode(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (fast.next == null) {
+            return slow;
+        } else {
+            return slow.next;
+        }
     }
 }

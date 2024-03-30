@@ -84,7 +84,6 @@ public class LargestRectangleArea {
     /**
      * My approach
      * Monotonic stack
-     * Around 190ms
      */
     public static int largestRectangleArea3(int[] heights) {
         Stack<Integer> stack = new Stack<>();
@@ -114,9 +113,8 @@ public class LargestRectangleArea {
     /**
      * Approach from zhitongguigu
      * Monotonic stack
-     * Around 160ms
      */
-    public static int largestRectangleArea(int[] heights) {
+    public static int largestRectangleArea4(int[] heights) {
         int area = 0;
         Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < heights.length; i++) {
@@ -142,10 +140,53 @@ public class LargestRectangleArea {
         return area;
     }
 
+    /**
+     * Mar 05, 2024 13:42
+     * Monotonic Stack
+     * Time Complexity: O(n)
+     * Space Complexity: O(n)
+     */
+    public static int largestRectangleArea(int[] heights) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(-1);
+        int max = 0;
+        for (int i = 0; i < heights.length; i++) {
+            while (stack.size() > 1 && heights[i] < heights[stack.peek()]) {
+                int index = stack.pop();
+                max = Math.max(max, (i - stack.peek() - 1) * heights[index]);
+            }
+            if (heights[i] == 0) {
+                stack.clear();
+            }
+            stack.push(i);
+        }
+        while (stack.size() > 1) {
+            int index = stack.pop();
+            max = Math.max(max, (heights.length - stack.peek() - 1) * heights[index]);
+        }
+        return max;
+    }
+
 
     public static void main(String[] args) {
         int[] heights;
         int output;
+
+        heights = new int[]{3, 6, 5, 7, 4, 8, 1, 0};
+        output = 20;
+        System.out.println(largestRectangleArea(heights) == output);
+
+        heights = new int[]{2, 1, 2};
+        output = 3;
+        System.out.println(largestRectangleArea(heights) == output);
+
+        heights = new int[]{0, 2, 0};
+        output = 2;
+        System.out.println(largestRectangleArea(heights) == output);
+
+        heights = new int[]{4, 2};
+        output = 4;
+        System.out.println(largestRectangleArea(heights) == output);
 
         heights = new int[]{2, 1, 5, 6, 2, 3};
         output = 10;
