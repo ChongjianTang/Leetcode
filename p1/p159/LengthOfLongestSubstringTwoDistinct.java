@@ -1,16 +1,16 @@
-package leetcode.p3.p340;
+package leetcode.p1.p159;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class LengthOfLongestSubstringKDistinct {
+public class LengthOfLongestSubstringTwoDistinct {
     /**
-     * Mar 30, 2024 02:25
-     * Sliding window
+     * Apr 01, 2024 00:07
+     * From problem 340
      * Time Complexity: O(n)
      * Space Complexity: O(n)
      */
-    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
         int left = -1;
         Map<Character, Integer> frequencyMap = new HashMap<>();
         int max = 0;
@@ -20,7 +20,7 @@ public class LengthOfLongestSubstringKDistinct {
             } else {
                 frequencyMap.put(s.charAt(i), frequencyMap.get(s.charAt(i)) + 1);
             }
-            while (frequencyMap.size() > k && left < s.length() - 1) {
+            while (frequencyMap.size() > 2 && left < s.length() - 1) {
                 left++;
                 if (frequencyMap.get(s.charAt(left)) == 1) {
                     frequencyMap.remove(s.charAt(left));
@@ -31,14 +31,5 @@ public class LengthOfLongestSubstringKDistinct {
             max = Math.max(max, i - left);
         }
         return max;
-    }
-
-    public static void main(String[] args) {
-        LengthOfLongestSubstringKDistinct l = new LengthOfLongestSubstringKDistinct();
-        String s;
-        int k;
-        s = "ccaabbb";
-        k = 2;
-        System.out.println(l.lengthOfLongestSubstringKDistinct(s, k) == 5);
     }
 }
