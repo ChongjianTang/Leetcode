@@ -6,6 +6,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class IsIsomorphic {
+    /**
+     * Apr 01, 2024 18:54
+     * Time Complexity: O(n)
+     * Space Complexity: O(n)
+     */
     public boolean isIsomorphic(String s, String t) {
         Map<Character, Character> map = new HashMap<>();
         Set<Character> used = new HashSet<>();

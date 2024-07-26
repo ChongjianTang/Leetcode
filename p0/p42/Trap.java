@@ -128,7 +128,7 @@ public class Trap {
      * Time complexity: O(n)
      * Space complexity: O(1)
      */
-    public static int trap(int[] height) {
+    public static int trap5(int[] height) {
         int left = 0;
         int right = height.length - 1;
         int result = 0;
@@ -150,6 +150,28 @@ public class Trap {
             }
         }
         return result;
+    }
+
+    /**
+     * Apr 11, 2024 22:49
+     * Monotonic Stack
+     * Time Complexity: O(n)
+     * Space Complexity: O(n)
+     */
+    public static int trap(int[] height) {
+        Stack<Integer> stack = new Stack<>();
+        int water = 0;
+        for (int i = 0; i < height.length; i++) {
+            while (!stack.isEmpty() && height[stack.peek()] <= height[i]) {
+                int index = stack.pop();
+                if (stack.isEmpty()) {
+                    break;
+                }
+                water += (i - stack.peek() - 1) * (Math.min(height[i], height[stack.peek()]) - height[index]);
+            }
+            stack.push(i);
+        }
+        return water;
     }
 
     public static void main(String[] args) {

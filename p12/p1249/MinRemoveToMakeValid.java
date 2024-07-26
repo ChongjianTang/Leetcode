@@ -1,6 +1,7 @@
 package leetcode.p12.p1249;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 public class MinRemoveToMakeValid {
     /**
@@ -49,8 +50,8 @@ public class MinRemoveToMakeValid {
     public static void main(String[] args) {
         String s;
         String result;
-        s= "lee(t(c)o)de)";
+        s = "lee(t(c)o)de)";
         result = minRemoveToMakeValid(s);
-        System.out.println(result.equals("lee(t(c)o)de") || result.equals("lee(t(co)de)")|| result.equals("lee(t(c)ode)"));
+        System.out.println(result.equals("lee(t(c)o)de") || result.equals("lee(t(co)de)") || result.equals("lee(t(c)ode)"));
     }
 }
