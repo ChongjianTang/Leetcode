@@ -1,12 +1,10 @@
-class Solution(object):
-    def parseBoolExpr(self, expression):
-        """
-        Recursion
-        Time Complexity: O(n)
-        Space Complexity: O(n)
-        :type expression: str
-        :rtype: bool
-        """
+class Solution:
+    """
+    Oct 19, 2024 23:40
+    Time Complexity: O(n)
+    Space Complexity: O(n)
+    """
+    def parseBoolExpr(self, expression: str) -> bool:
         if expression[0] == 't':
             return True
         elif expression[0] == 'f':
