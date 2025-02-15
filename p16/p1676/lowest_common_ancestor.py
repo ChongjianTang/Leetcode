@@ -1,4 +1,7 @@
 # Definition for a binary tree node.
+from typing import List
+
+
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -12,7 +15,7 @@ class Solution:
 
     def dfs(self, root: TreeNode, nodes: List[TreeNode]) -> (int, TreeNode):
         current = 0
-        if root == p or root == :
+        if root == p or root == q:
             current = 1
 
         left_count = 0
