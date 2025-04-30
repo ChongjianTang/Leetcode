@@ -4,7 +4,10 @@ from typing import List
 class Solution:
     """
     Apr 02, 2025 14:27
+    Time Complexity: O(n^3)
+    Space Complexity: O(1)
     """
+
     def maximumTripletValue(self, nums: List[int]) -> int:
         n = len(nums)
         result = 0
