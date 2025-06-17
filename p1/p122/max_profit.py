@@ -3,6 +3,25 @@ from typing import List
 
 class Solution:
     """
+    May 28, 2025 09:25
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+
+    def maxProfit(self, prices: List[int]) -> int:
+        max_profit = 0
+
+        min_price = float('inf')
+        for price in prices:
+            min_price = min(min_price, price)
+            if price > min_price:
+                max_profit += price - min_price
+                min_price = price
+        return max_profit
+
+
+class Solution2:
+    """
     Feb 15, 2025 22:20
     DP
     Time Complexity: O(n)
@@ -21,7 +40,7 @@ class Solution:
         return dp[0][len(prices) - 1]
 
 
-class Solution:
+class Solution1:
     """
     Feb 15, 2025 22:22
     Time Complexity: O(n)

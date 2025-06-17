@@ -3,6 +3,23 @@ from typing import List
 
 class Solution:
     """
+    May 27, 2025 18:15
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+
+    def maxProfit(self, prices: List[int]) -> int:
+        max_profit = 0
+        min_price = prices[0]
+        for i in range(1, len(prices)):
+            max_profit = max(max_profit, prices[i] - min_price)
+            min_price = min(min_price, prices[i])
+
+        return max_profit
+
+
+class Solution2:
+    """
     Feb 15, 2025 17:58
     Time Complexity: O(n)
     Space Complexity: O(n)
