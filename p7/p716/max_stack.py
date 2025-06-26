@@ -44,55 +44,60 @@ import heapq
 
 
 class MaxStack:
+    """
+    Jun 25, 2025 11:23
+    Time Complexity:
+        push: O(logn)
+        pop: O(1)
+        top: O(1)
+        peekMax: O(logn)
+        popMax: O(logn)
+    Space Complexity: O(n)
+    """
 
     def __init__(self):
         self.count = 0
-        self.vals = {}
+        self.vals = set()
         self.stack = []
         self.max_heap = []
 
     def push(self, x: int) -> None:
-        self.stack.append(x)
-        if x not in self.vals:
-            self.vals[x] = 1
-        else:
-            self.vals[x] += 1
-
-        heapq.heappush(self.max_heap, -x)
+        self.stack.append((x, self.count))
+        heapq.heappush(self.max_heap, (-x, -self.count))
+        self.vals.add(self.count)
+        self.count += 1
 
     def pop(self) -> int:
-        x = self.stack[-1]
-        while x not in self.vals:
-            self.stack.pop()
-            x = self.stack[-1]
+        x, index = self.stack.pop()
+        while index not in self.vals:
+            x, index = self.stack.pop()
 
-        self.stack.pop()
-        if self.vals[x] == 1:
-            self.vals.pop(x)
-        else:
-            self.vals[x] -= 1
-
+        self.vals.remove(index)
         return x
 
     def top(self) -> int:
-        return self.stack[-1]
-
-    def peekMax(self) -> int:
-        return self.max_heap[-1]
-
-    def popMax(self) -> int:
-        x = -self.max_heap[-1]
-        while x not in self.vals:
-            heapq.heappop(self.max_heap)
-            x = -self.max_heap[-1]
-
-        heapq.heappop(self.max_heap)
-        if self.vals[x] == 1:
-            self.vals.pop(x)
-        else:
-            self.vals[x] -= 1
+        x, index = self.stack[-1]
+        while index not in self.vals:
+            self.stack.pop()
+            x, index = self.stack[-1]
 
         return x
+
+    def peekMax(self) -> int:
+        x, index = self.max_heap[0]
+        while -index not in self.vals:
+            heapq.heappop(self.max_heap)
+            x, index = self.max_heap[0]
+
+        return -x
+
+    def popMax(self) -> int:
+        x, index = heapq.heappop(self.max_heap)
+        while -index not in self.vals:
+            x, index = heapq.heappop(self.max_heap)
+
+        self.vals.remove(-index)
+        return -x
 
 
 # Your MaxStack object will be instantiated and called as such:
@@ -105,12 +110,45 @@ class MaxStack:
 
 if __name__ == '__main__':
     stk = MaxStack()
-    stk.push(5)
+    stk.push(15)
+    print(stk.pop() == 15)
     stk.push(1)
-    stk.push(5)
-    print(stk.top() == 5)
-    print(stk.popMax() == 5)
-    print(stk.top() == 1)
-    print(stk.peekMax() == 5)
-    print(stk.pop() == 1)
-    print(stk.top() == 5)
+    stk.push(-52)
+    stk.push(80)
+    stk.push(-39)
+    print(stk.popMax() == 80)
+    stk.push(91)
+    print(stk.pop() == 91)
+    print(stk.pop() == -39)
+    print(stk.top() == -52)
+    stk.push(36)
+
+    stk = MaxStack()
+    stk.push(92)
+    print(stk.peekMax() == 92)
+    stk.push(54)
+    print(stk.peekMax() == 92)
+    stk.push(22)
+    print(stk.pop() == 22)
+    print(stk.pop() == 54)
+    stk.push(-57)
+    print(stk.peekMax() == 92)
+    stk.push(-24)
+    print(stk.popMax() == 92)
+    print(stk.top() == -24)
+    stk.push(26)
+    stk.push(-71)
+    print(stk.peekMax() == 26)
+    print(stk.popMax() == 26)
+    print(stk.popMax() == -24)
+
+    # stk = MaxStack()
+    # stk.push(5)
+    # stk.push(1)
+    # stk.push(5)
+    # print(stk.top() == 5)
+    # print(stk.popMax() == 5)
+    # print(stk.top() == 1)
+    # print(stk.peekMax() == 5)
+    # print(stk.pop() == 1)
+    # print(stk.top() == 5)
