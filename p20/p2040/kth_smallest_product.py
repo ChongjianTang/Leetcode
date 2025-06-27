@@ -44,6 +44,12 @@ from typing import List
 
 
 class Solution:
+    """
+    Jun 26, 2025 14:03
+    Time Complexity: O((n+m)logv) v = max_val - min_val
+    Space Complexity: O(1)
+    """
+
     def kthSmallestProduct(self, nums1: List[int], nums2: List[int], k: int) -> int:
         index1 = len(nums1)
         for i in range(len(nums1)):
@@ -56,17 +62,97 @@ class Solution:
                 index2 = i
                 break
 
-        min_val = min(nums1[0] * nums2[0], nums1[0] * nums2[-1], nums1[-1] * nums2[0], nums1[-1], nums2[-1]) - 1
-        max_val = max(nums1[0] * nums2[0], nums1[0] * nums2[-1], nums1[-1] * nums2[0], nums1[-1], nums2[-1])
+        min_val = min(nums1[0] * nums2[0], nums1[0] * nums2[-1], nums1[-1] * nums2[0], nums1[-1] * nums2[-1]) - 1
+        max_val = max(nums1[0] * nums2[0], nums1[0] * nums2[-1], nums1[-1] * nums2[0], nums1[-1] * nums2[-1])
 
         while min_val + 1 < max_val:
             mid = (min_val + max_val) // 2
+            if self.check_less_than_target(nums1, index1, nums2, index2, k, mid):
+                max_val = mid
+            else:
+                min_val = mid
+
+        return max_val
 
     def check_less_than_target(self, nums1: List[int], index1: int, nums2: List[int], index2: int, k: int, target: int):
         count = 0
         if target < 0:
-            left = 0
-            right = index2
-            while left < index1 and right < len(nums2):
-                if nums1[left] * nums2[right] <= target:
+            i = 0
+            j = index2
+            while i < index1 and j < len(nums2):
+                if nums1[i] * nums2[j] <= target:
+                    count += len(nums2) - j
+                    if count >= k:
+                        return True
+                    i += 1
+                else:
+                    j += 1
 
+            i = index1
+            j = 0
+            while i < len(nums1) and j < index2:
+                if nums2[j] * nums1[i] <= target:
+                    count += len(nums1) - i
+                    if count >= k:
+                        return True
+                    j += 1
+                else:
+                    i += 1
+        else:
+            count += index1 * (len(nums2) - index2)
+            count += index2 * (len(nums1) - index1)
+            if count >= k:
+                return True
+
+            i = index1 - 1
+            j = 0
+            while i >= 0 and j < index2:
+                if nums1[i] * nums2[j] <= target:
+                    count += index2 - j
+                    if count >= k:
+                        return True
+                    i -= 1
+                else:
+                    j += 1
+
+            i = index1
+            j = len(nums2) - 1
+            while i < len(nums1) and j >= index2:
+                if nums1[i] * nums2[j] <= target:
+                    count += j + 1 - index2
+                    if count >= k:
+                        return True
+                    i += 1
+                else:
+                    j -= 1
+        return False
+
+
+if __name__ == '__main__':
+    sol = Solution()
+
+    nums1 = [-9, -8, -8, -6, -4, -1, 2, 3]
+
+    nums2 = [-1, -1, 0, 0, 3, 8]
+    k = 48
+    print(sol.kthSmallestProduct(nums1, nums2, k) == 24)
+
+    nums1 = [7, 10]
+    nums2 = [-8, -6, -4, -3, 1, 4, 4, 5]
+    k = 8
+    print(sol.kthSmallestProduct(nums1, nums2, k) == -21)
+
+    nums1 = [-9, 6, 10]
+    nums2 = [-7, -1, 1, 2, 3, 4, 4, 6, 9, 10]
+    k = 15
+    print(sol.kthSmallestProduct(nums1, nums2, k) == 10)
+
+    nums1 = [-4, -2, 0, 3]
+    nums2 = [2, 4]
+    k = 6
+    print(sol.kthSmallestProduct(nums1, nums2, k) == 0)
+
+    nums1 = [2, 5]
+    nums2 = [3, 4]
+    k = 2
+    print(sol.kthSmallestProduct(nums1, nums2, k) == 8)
