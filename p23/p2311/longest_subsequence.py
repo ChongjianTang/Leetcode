@@ -35,9 +35,7 @@ s[i] is either '0' or '1'.
 
 class Solution:
     def longestSubsequence(self, s: str, k: int) -> int:
-        stack=[]
 
-        return max_length
 
 
 if __name__ == '__main__':
