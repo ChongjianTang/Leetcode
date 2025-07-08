@@ -47,16 +47,93 @@ word consists only of lowercase English letters.
 """
 22
 
-00 10 20 02 01 11 21 12
+00 01 02 02 01 11 21 12
 aaabbb aabbb abbb aaab aaabb aabb abb aab
 
-||1 1 1 1
-1||1 1 1
-1 1||1 1
-|1 1|1 1
-"""
+||1 1 1
+|1|1 1
+|1 1|1
 
+1||1 1
+1|1|1
+1|1 1|
+
+1 1||1
+1 1|1|
+
+"""
 class Solution:
+    """
+    TLE
+    DP
+    """
     def possibleStringCount(self, word: str, k: int) -> int:
         mod = 10 ** 9 + 7
+        freq = []
 
+        capacity = len(word) - k
+        count = 0
+        for i in range(1, len(word)):
+            if word[i] == word[i - 1]:
+                count += 1
+            else:
+                freq.append(count)
+                count = 0
+
+        freq.append(count)
+        dp = [0] * (capacity + 1)
+        dp[0] = 1
+        for f in freq:
+            for i in range(capacity, 0, -1):
+                for j in range(1, min(f, i) + 1):
+                    dp[i] += dp[i - j]
+                    dp[i] %= mod
+
+        result = 0
+        for val in dp:
+            result += val
+            result %= mod
+
+        return result
+
+
+class Solution1:
+    """
+    TLE
+    DP
+    """
+    def possibleStringCount(self, word: str, k: int) -> int:
+        mod = 10 ** 9 + 7
+        freq = []
+
+        capacity = len(word) - k
+        count = 0
+        for i in range(1, len(word)):
+            if word[i] == word[i - 1]:
+                count += 1
+            else:
+                freq.append(count)
+                count = 0
+
+        freq.append(count)
+        dp = [0] * (capacity + 1)
+        dp[0] = 1
+        for f in freq:
+            for i in range(capacity, 0, -1):
+                for j in range(1, min(f, i) + 1):
+                    dp[i] += dp[i - j]
+                    dp[i] %= mod
+
+        result = 0
+        for val in dp:
+            result += val
+            result %= mod
+
+        return result
+
+
+if __name__ == '__main__':
+    obj = Solution()
+    word = "aaabbb"
+    k = 3
+    print(obj.possibleStringCount(word, k))
