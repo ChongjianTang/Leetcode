@@ -35,4 +35,53 @@ from typing import List
 
 
 class Solution:
+    class Trie:
+        class TrieNode:
+            def __init__(self):
+                self.is_word = False
+                self.children = {}
+
+        def __init__(self):
+            self.root = self.TrieNode()
+
+        def add_word(self, word: str):
+            node = self.root
+            for c in word:
+                if c not in node:
+                    node.children[c] = self.TrieNode()
+                node = node.children[c]
+            node.is_word = True
+
+        def find_words_with_prefix(self, prefix: str):
+            result = []
+            node = self.root
+            for c in prefix:
+                if c not in node.children:
+                    return []
+                node = node.children[c]
+
+            if node.is_word:
+                result.append(prefix)
+
+            stack = [node]
+            while stack:
+                curr_node = stack.pop()
+                for
+
     def wordSquares(self, words: List[str]) -> List[List[str]]:
+        n = len(words[0])
+        trie = self.Trie()
+        for word in words:
+            trie.add_word(word)
+
+        matrix = []
+        for word in words:
+            matrix.append(word)
+
+    def back_tracking(self, matrix: List[str], trie: Trie, result: List[List[str]]):
+        if len(matrix) == len(matrix[0]):
+            result.append(matrix.copy())
+            return
+
+        n = len(matrix)
+        for i in range(n):

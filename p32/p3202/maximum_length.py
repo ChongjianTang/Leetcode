@@ -38,7 +38,37 @@ from typing import List
 
 
 class Solution:
+    """
+    Jul 17, 2025 16:48
+    Time Complexity: O(nk)
+    Space Complexity: O(nk)
+    """
     def maximumLength(self, nums: List[int], k: int) -> int:
-        dp = [[0 for _ in range(len(nums))] for _ in range(k)]
-        prev = [0] * k
+        dp = [[0 for _ in range(k)] for _ in range(len(nums))]
+        prev = [-1] * k
+        for i in range(len(nums)):
+            r = nums[i] % k
+            for j in range(k):
+                if prev[j] == -1:
+                    dp[i][(j + r) % k] = 1
+                else:
+                    dp[i][(j + r) % k] = dp[prev[j]][(j + r) % k] + 1
 
+            prev[r] = i
+
+        result = 0
+        for i in range(k):
+            result = max(result, max(dp[prev[i]]))
+
+        return result
+
+
+if __name__ == '__main__':
+    obj = Solution()
+    nums = [1, 4, 2, 3, 1, 4]
+    k = 3
+    print(obj.maximumLength(nums, k))
+
+    nums = [1, 2, 3, 4, 5]
+    k = 2
+    print(obj.maximumLength(nums, k))
