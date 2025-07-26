@@ -31,10 +31,14 @@ All words[i] have the same length.
 words[i] consists of only lowercase English letters.
 All words[i] are unique.
 """
+from asyncore import write
 from typing import List
 
 
 class Solution:
+    """
+    Jul 19, 2025 16:19
+    """
     class Trie:
         class TrieNode:
             def __init__(self):
@@ -47,7 +51,7 @@ class Solution:
         def add_word(self, word: str):
             node = self.root
             for c in word:
-                if c not in node:
+                if c not in node.children:
                     node.children[c] = self.TrieNode()
                 node = node.children[c]
             node.is_word = True
@@ -60,23 +64,26 @@ class Solution:
                     return []
                 node = node.children[c]
 
-            if node.is_word:
-                result.append(prefix)
+            self.dfs(node, "", prefix, result)
+            return result
 
-            stack = [node]
-            while stack:
-                curr_node = stack.pop()
-                for
+        def dfs(self, node: TrieNode, curr: str, prefix: str, result: List[str]):
+            if node.is_word:
+                result.append(prefix + curr)
+
+            for c in node.children:
+                self.dfs(node.children[c], curr + c, prefix, result)
 
     def wordSquares(self, words: List[str]) -> List[List[str]]:
-        n = len(words[0])
         trie = self.Trie()
         for word in words:
             trie.add_word(word)
 
-        matrix = []
+        result = []
         for word in words:
-            matrix.append(word)
+            self.back_tracking([word], trie, result)
+
+        return result
 
     def back_tracking(self, matrix: List[str], trie: Trie, result: List[List[str]]):
         if len(matrix) == len(matrix[0]):
@@ -84,4 +91,17 @@ class Solution:
             return
 
         n = len(matrix)
+        prefix = ""
         for i in range(n):
+            prefix += matrix[i][n]
+
+        words = trie.find_words_with_prefix(prefix)
+        for word in words:
+            self.back_tracking(matrix + [word], trie, result)
+
+if __name__ == '__main__':
+    obj = Solution()
+    words = ["abat", "baba", "atan", "atal"]
+    print(obj.wordSquares(words))
+    words = ["area", "lead", "wall", "lady", "ball"]
+    print(obj.wordSquares(words))
