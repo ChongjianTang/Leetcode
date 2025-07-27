@@ -46,3 +46,15 @@ from typing import List
 
 class Solution:
     def maxSubarrays(self, n: int, conflictingPairs: List[List[int]]) -> int:
+        b_min1 = [n + 1] * (n + 1)
+        b_min2 = [n + 1] * (n + 1)
+        for pair in conflictingPairs:
+            a = min(pair[0], pair[1])
+            b = min(pair[0], pair[1])
+            if b_min1[a] > b:
+                b_min2[a] = b_min1[a]
+                b_min1[a] = b
+            elif b_min2[a] > b:
+                b_min2[a] = b
+
+
